@@ -1,0 +1,61 @@
+TITLE: FEM: Part naming not unique in Elmer SIF files / Not all boundary conditions written
+STATE: open
+AUTHOR: xorxx
+CREATED: 2024-04-16T12:10:10Z
+UPDATED: 2026-07-12T00:45:22Z
+ASSIGNEES: 
+LABELS: Type: Bug, Mod: FEM, Good first issue, Status: Confirmed, Help wanted, Status: Solution proposed
+
+### Is there an existing issue for this?
+
+- [X] I have searched the existing issues
+
+### Problem description
+
+My Sif files created for elmer solver often don't execute because of error message:
+```
+ReadTargetNames: Reading names info from file: ./mesh.names
+ERROR:: ReadTargetNames: Mapping of name is not unique: solid1
+```
+For multiple solids or other object types only the name part "solid" is written to the sif file. If you change it at one position in the file to an other name e.g. "solid1b" the file is running. I guess a complete object identifier should be used as a name.
+
+For the attached project the naming problem is not the only one. I have three boundary conditions but only two are written to sif file.
+
+The condition "ConstraintElectrostaticPotential-negative" is not written. When I remove it and create it from scratch it is written but another condition is missing then. Maybe a one-off problem?
+
+Thanks for your support and for this great software!
+
+
+### Full version info
+
+```shell
+OS: Windows 10 build 19045
+Word size of FreeCAD: 64-bit
+Version: 0.21.2.33771 (Git)
+Build type: Release
+Branch: releases/FreeCAD-0-21
+Hash: b9bfa5c5507506e4515816414cd27f4851d00489
+Python 3.8.10, Qt 5.15.2, Coin 4.0.1, Vtk 8.2.0, OCC 7.6.3
+Locale: German/Germany (de_DE)
+Installed mods: 
+  * Assembly3 0.12.0
+  * Assembly4 0.50.4
+  * freecad.gears 1.1.0
+  * Help 1.0.3
+  * ToOptix
+```
+
+
+### Subproject(s) affected?
+
+FEM
+
+### Anything else?
+
+1. Freecad project with two problems in SIF file:  [FEM-Elmer-Problem.zip](https://github.com/FreeCAD/FreeCAD/files/14996421/FEM-Elmer-Problem.zip)
+2. Files written for Elmer Solver: [FEM-Elmer-problem-sif.zip](https://github.com/FreeCAD/FreeCAD/files/14996438/FEM-Elmer-problem-sif.zip)
+
+
+### Code of Conduct
+
+- [X] I agree to follow this project's Code of Conduct

@@ -1,0 +1,73 @@
+TITLE: OpenSCAD: `.scad` import failure - cannot open files with `hull()` function
+STATE: open
+AUTHOR: scottclo
+CREATED: 2024-03-14T16:43:52Z
+UPDATED: 2026-08-03T00:44:58Z
+ASSIGNEES: 
+LABELS: Type: Bug, Mod: OpenSCAD, File format: DXF, Status: Confirmed
+
+### Is there an existing issue for this?
+
+- [X] I have searched the existing issues
+
+### Problem description
+
+I'm trying to open my OpenSCAD project containing a `hull()` in FreeCAD and it fails with an error message about `<class 'TypeError'>: cannot unpack non-iterable bool object` I've tested this on 2 other Linux machines with the same result.
+
+### Log
+```
+Msg: opening C:\Users\ROBSIG~1\AppData\Local\Temp\fc-10700-753328-000003.dxf...
+Msg: There has been an error:Msg: 
+Msg: First section is not HEADERMsg: 
+Err: Traceback (most recent call last):
+  File "C:\Users\Rob Sight\AppData\Roaming\FreeCAD\Mod\Alternate_OpenSCAD\.\OpenSCADFeatures.py", line 584, in execute
+    shape = OpenSCAD.OpenSCADUtils.process_ObjectsViaOpenSCADShape(fp.Document,fp.Children,\
+  File "C:\Users\Rob Sight\AppData\Local\Programs\FreeCAD 0.21\Mod\OpenSCAD\OpenSCADUtils.py", line 648, in process_ObjectsViaOpenSCADShape
+    return process2D_ObjectsViaOpenSCADShape(children,name,doc)
+  File "C:\Users\Rob Sight\AppData\Local\Programs\FreeCAD 0.21\Mod\OpenSCAD\OpenSCADUtils.py", line 590, in process2D_ObjectsViaOpenSCADShape
+    face = importDXFface(tmpfilename,None,None)
+  File "C:\Users\Rob Sight\AppData\Roaming\FreeCAD\Mod\Alternate_OpenSCAD\.\OpenSCAD2Dgeom.py", line 485, in importDXFface
+    layers = importDXF.processdxf(doc,filename,False,False) or importDXF.layers
+  File "C:\Users\Rob Sight\AppData\Local\Programs\FreeCAD 0.21\Mod\Draft\importDXF.py", line 2147, in processdxf
+    drawing = dxfReader.readDXF(filename)
+  File "C:\Users\Rob Sight\AppData\Roaming\FreeCAD\Macro\dxfReader.py", line 399, in readDXF
+    (infile, drawing) = sm.run((infile, None))
+<class 'TypeError'>: cannot unpack non-iterable bool object
+Err: Recompute failed!
+```
+### example code
+```
+hull(){
+	circle(10);
+	translate([10,0,0])circle(10);
+}
+```
+
+### Full version info
+
+```shell
+[code]
+OS: Windows 10 build 19045
+Word size of FreeCAD: 64-bit
+Version: 0.21.2.33771 (Git)
+Build type: Release
+Branch: releases/FreeCAD-0-21
+Hash: b9bfa5c5507506e4515816414cd27f4851d00489
+Python 3.8.10, Qt 5.15.2, Coin 4.0.1, Vtk 8.2.0, OCC 7.6.3
+Locale: English/United States (en_US)
+[/code]
+```
+
+
+### Subproject(s) affected?
+
+None
+
+### Anything else?
+
+[FreeCAD.log](https://github.com/FreeCAD/FreeCAD/files/14605987/FreeCAD.log)
+[test.scad.txt](https://github.com/FreeCAD/FreeCAD/files/14605993/test.scad.txt)
+
+### Code of Conduct
+
+- [X] I agree to follow this project's Code of Conduct

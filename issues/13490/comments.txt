@@ -1,0 +1,173 @@
+
+----- 2024-04-16 maxwxyz -----
+@FEA-eng FYI
+
+----- 2024-04-17 FEA-eng -----
+I'm not familiar with this part of the code. @marioalexis84 Can you take a look at it?
+
+----- 2024-04-29 xorxx -----
+I did some debugging on this problem, but I am not deep enough in code to provide a final solution. But some hints from my side.
+
+At least a part of the problem is inside `.\Mod\Fem\femsolver\elmer\writer.py`. At several places in code a name for the sif-file name-field is created by only using `name `property of objects. This leads to duplicates because `name `property has values like "solid1" or "face1" for multiple objects. To resolve this I tried to modify function `getAllBodies` as follows by replacing references to `obj.Name` with `obj.FullName`. I added a string replace for "#" because this leads to problem in SIF file.
+
+```
+ def getAllBodies(self):
+     obj = self.getSingleMember("Fem::FemMeshObject")
+     bodyCount = 0
+     prefix = ""
+     if obj.Part.Shape.Solids:
+         prefix = "Solid:"+obj.FullName.replace("#",":")
+         bodyCount = len(obj.Part.Shape.Solids)
+     elif obj.Part.Shape.Faces:
+         prefix = "Face:"+obj.FullName.replace("#",":")
+         bodyCount = len(obj.Part.Shape.Faces)
+     elif obj.Part.Shape.Edges:
+         prefix = "Edge:"+obj.FullName.replace("#",":")
+         bodyCount = len(obj.Part.Shape.Edges)
+     return [prefix + str(i + 1) for i in range(bodyCount)]
+```
+
+Modifications like this are needed in other places too. I am just not familiar enough with SIF file structure to see if this is really correct what I am doing here. At least my model is not fully running as expected with this modifications, but it gets a bit better.
+
+Maybe this helps one of the specialist by solving this problem. Thanks for all your contributions to this great piece of software! I convinced my boss to donate some money to FreeCAD development. It is definitely worth!
+
+----- 2024-05-20 marioalexis84 -----
+I will have a look
+
+----- 2024-08-01 artsonit -----
+Hi, 
+change line: 
+https://github.com/FreeCAD/FreeCAD/blob/d6347a4b1516d2dc1e7f7e191073308ec049ac48/src/Mod/Fem/femsolver/elmer/sifio.py#L189
+From 
+```python
+ section["Name"] = name 
+```
+to 
+```python
+ section["Name"] = name + "x"
+```
+
+Edit: formatted and added link
+
+----- 2024-08-02 luzpaz -----
+@artsonit if this is the fix, can you make a PR ?
+
+----- 2024-09-04 akapelrud -----
+Bumping this. I had a similar issue and tried the proposed solution. It fixed half of the problem.:
+
+> Hi, change line 189 of .\Mod\Fem\femsolver\elmer\sifio.py
+> 
+> section["Name"] = name
+> 
+> to
+> 
+> section["Name"] = name + "x"
+
+This removes the error by changing the names of the exported boundary conditions, but it does not fix all the elmer output files. Specifically, the generated file `mesh.names` must be altered to reflect the same changes in the section:
+`! ----- names for boundaries -----`.
+
+----- 2024-09-04 luzpaz -----
+Where does the `mesh.names` get generated from and separately question: how do other installed solvers do this. Can someone compare ?
+
+CC @drhooves (hasn't been active on github since 2018 but thought I'd try anyway)
+
+----- 2024-09-04 marioalexis84 -----
+There is certainly a current limitation in the handling of multiple bodies and meshes.
+In this case, what must be done is to assign all the references of the constraints to the Cut shape, since the meshing will be performed on this object.
+No constraints should be assigned to the objects from which the Cut was formed (neither electrodes nor kugel).
+One more comment, the potential at infinity must be applied on the outer surface Cut.Face1, not on the solid Cut.Solid1
+
+
+----- 2024-09-06 akapelrud -----
+> Where does the `mesh.names` get generated from and separately question: how do other installed solvers do this. Can someone compare ?
+>
+I am pretty sure that it is `elmergrid` that generates this file. It is probably fed the names by the writer somehow.
+
+----- 2024-09-06 luzpaz -----
+We need a dev to spearhead this effort. If you know someone or of someone that could, please pass the word on. 
+
+----- 2024-09-09 akapelrud -----
+The boundary conditions are named in the input file `mesh.unv` generated in in `src/Mod/Fem/femsolver/elmer/writer.py` which is fed to elmergrid. It seems that the lines:
+
+```python
+    def _writeMesh(self):
+        mesh = self.getSingleMember("Fem::FemMeshObject")
+        unvPath = os.path.join(self.directory, "mesh.unv")
+        groups = []
+        groups.extend(self._builder.getBodyNames())
+        groups.extend(self._builder.getBoundaryNames())
+        self._exportToUnv(groups, mesh, unvPath)
+        ...
+```
+I'll guess this can be fixed by making sure that `getBodyNames()` and `getBoundaryNames()` create unique names. Maybe add a 'BC_' prefix to the entries from `getBoundaryNames()`
+
+----- 2025-06-24 github-actions[bot] -----
+Hi! This issue hasn’t seen activity in a while. If it’s still relevant, please update to the latest FreeCAD weekly build [download here](https://github.com/FreeCAD/FreeCAD-Bundle/releases/tag/weekly-builds) to see if the problem is resolved.
+
+If the issue persists, let us know by adding a comment with any updates or details. Otherwise, we’ll close this issue automatically in 14 days to keep our backlog tidy. Feel free to comment anytime to keep it open. Closed issues can always be reopened.
+Thanks for helping improve FreeCAD!
+
+Access additional [FreeCAD](https://freecad.org) resources:
+  - **Forum**: https://forum.freecad.org
+  - **Blog**: https://blog.freecad.org
+  - **Wiki**: https://wiki.freecad.org
+
+----- 2025-06-24 xorxx -----
+Issue still persists with weekly build 42180 on Windows.
+
+----- 2025-06-24 luzpaz -----
+@akapelrud do you want to take a shot at this ?
+
+----- 2026-01-01 github-actions[bot] -----
+Hi! This issue hasn’t seen activity in a while. We automatically check each issue after 190 days without activity to keep the backlog tidy.
+If it’s still relevant, please update to the latest FreeCAD weekly build [download here](https://github.com/FreeCAD/FreeCAD/releases/) to see if the issue is already resolved.
+
+If the issue is still relevant, let us know by adding a comment.
+Otherwise, we’ll close this issue automatically in 60 days.
+
+Feel free to comment anytime to keep it open. Closed issues can always be reopened.
+Thanks for helping improve FreeCAD!
+
+Access additional [FreeCAD](https://freecad.org) resources:
+  - **Forum**: https://forum.freecad.org
+  - **Blog**: https://blog.freecad.org
+  - **Wiki**: https://wiki.freecad.org
+
+----- 2026-01-01 luzpaz -----
+> I will have a look
+
+@marioalexis84 any insights ?
+
+----- 2026-07-11 github-actions[bot] -----
+Hi! This issue hasn’t seen activity in a while. We automatically check each issue after 190 days without activity to keep the backlog tidy.
+If it’s still relevant, please update to the latest FreeCAD weekly build [download here](https://github.com/FreeCAD/FreeCAD/releases/) to see if the issue is already resolved.
+
+If the issue is still relevant, let us know by adding a comment.
+Otherwise, we’ll close this issue automatically in 60 days.
+
+Feel free to comment anytime to keep it open. Closed issues can always be reopened.
+Thanks for helping improve FreeCAD!
+
+Access additional [FreeCAD](https://freecad.org) resources:
+  - **Forum**: https://forum.freecad.org
+  - **Blog**: https://blog.freecad.org
+  - **Wiki**: https://wiki.freecad.org
+
+----- 2026-07-11 FEA-eng -----
+It should still be relevant
+
+```
+OS: Windows 11 build 26200
+Architecture: x86_64
+Version: 26.3.0dev.20260630 (Git shallow)
+Build date: 2026/06/30 20:58:37
+Build type: Release
+Branch: (HEAD detached at ba406c730)
+Hash: ba406c730396ec276004d5ef6c70d96a5a97488b
+Python 3.11.14, Qt 6.8.3, Coin 4.0.3, Vtk 9.3.1, boost 1_86, Eigen3 3.4.0, PySide 6.8.3
+shiboken 6.8.3, xerces-c 3.3.0, Clipper2 , IfcOpenShell 0.8.2, OCC 7.8.1
+Locale: Polish/Poland (pl_PL) [ OS: Polish/Poland (pl_PL) ]
+Stylesheet/Theme/QtStyle: FreeCAD.qss/FreeCAD Light/
+Navigation Style/Orbit Style/Rotation Mode: Gesture/Rounded Arcball/Window center
+Logical DPI/Physical DPI/Pixel Ratio: 96/113.268/1.25
+```

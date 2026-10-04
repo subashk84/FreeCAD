@@ -1,0 +1,263 @@
+﻿Msg: FreeCAD 0.22.0, Libs: 0.22.0devR36391 (Git)
+© Juergen Riegel, Werner Mayer, Yorik van Havre and others 2001-2024
+FreeCAD is free and open-source software licensed under the terms of LGPL2+ license.
+FreeCAD wouldn't be possible without FreeCAD community.
+  #####                 ####  ###   ####  
+  #                    #      # #   #   # 
+  #     ##  #### ####  #     #   #  #   # 
+  ####  # # #  # #  #  #     #####  #   # 
+  #     #   #### ####  #    #     # #   # 
+  #     #   #    #     #    #     # #   #  ##  ##  ##
+  #     #   #### ####   ### #     # ####   ##  ##  ##
+
+Log: Time = 2024-Mar-14 21:30:07
+Log: AboutImage = freecadabout
+Log: AppDataSkipVendor = true
+Log: AppHomePath = /tmp/.mount_FreeCAbAJ1NF/usr/
+Log: AppIcon = freecad
+Log: AppTempPath = /tmp/
+Log: BOOST_VERSION = 1_82
+Log: BinPath = /tmp/.mount_FreeCAbAJ1NF/usr/bin/
+Log: BuildRepositoryURL = https://github.com/FreeCAD/FreeCAD main
+Log: BuildRevision = 36391 (Git)
+Log: BuildRevisionBranch = main
+Log: BuildRevisionDate = 2024/03/11 18:35:59
+Log: BuildRevisionHash = 52fffaf50ef8facea2ecfde23d6f1a7d3ad3d80c
+Log: BuildVersionMajor = 0
+Log: BuildVersionMinor = 22
+Log: BuildVersionPoint = 0
+Log: BuildVersionSuffix = dev
+Log: CSF_IGESDefaults = /usr/share/opencascade/resources/XSTEPResource
+Log: CSF_LANGUAGE = us
+Log: CSF_MDTVTexturesDirectory = /usr/share/opencascade/resources/Textures
+Log: CSF_PluginDefaults = /usr/share/opencascade/resources/StdResource
+Log: CSF_SHMessage = /usr/share/opencascade/resources/SHMessage
+Log: CSF_STEPDefaults = /usr/share/opencascade/resources/XSTEPResource
+Log: CSF_StandardDefaults = /usr/share/opencascade/resources/StdResource
+Log: CSF_XCAFDefaults = /usr/share/opencascade/resources/StdResource
+Log: Console = 0
+Log: CopyrightInfo = © Juergen Riegel, Werner Mayer, Yorik van Havre and others 2001-2024
+FreeCAD is free and open-source software licensed under the terms of LGPL2+ license.
+FreeCAD wouldn't be possible without FreeCAD community.
+  #####                 ####  ###   ####  
+  #                    #      # #   #   # 
+  #     ##  #### ####  #     #   #  #   # 
+  ####  # # #  # #  #  #     #####  #   # 
+  #     #   #### ####  #    #     # #   # 
+  #     #   #    #     #    #     # #   #  ##  ##  ##
+  #     #   #### ####   ### #     # ####   ##  ##  ##
+
+
+Log: Debug = 0
+Log: DocPath = /tmp/.mount_FreeCAbAJ1NF/usr/doc/
+Log: EIGEN_VERSION = 3.4.0
+Log: ExeName = FreeCAD
+Log: ExeVendor = FreeCAD
+Log: ExeVersion = 0.22.0
+Log: LoggingConsole = 1
+Log: LoggingFile = 1
+Log: LoggingFileName = /home/scott/.local/share/FreeCAD/FreeCAD.log
+Log: MaintainerUrl = https://www.freecad.org/wiki/Main_Page
+Log: OCC_VERSION = 7.6.3
+Log: PATH = /usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/bin:/usr/lib/jvm/default-jdk/bin:/usr/lib/jvm/default-jre/bin
+Log: PYSIDE_VERSION = 5.15.8
+Log: PYTHONHOME = /tmp/.mount_FreeCAbAJ1NF/usr
+Log: PYTHONPATH = 
+Log: PYTHON_VERSION = 3.10.13
+Log: PythonSearchPath = /tmp/.mount_FreeCAbAJ1NF/usr/lib/python310.zip:/tmp/.mount_FreeCAbAJ1NF/usr/lib/python3.10:/tmp/.mount_FreeCAbAJ1NF/usr/lib/python3.10/lib-dynload
+Log: QT_VERSION = 5.15.8
+Log: RunMode = Gui
+Log: SMESH_VERSION = 9.8.0.2
+Log: SplashAlignment = Bottom|Left
+Log: SplashInfoColor = #8aadf4
+Log: SplashInfoPosition = 6,75
+Log: SplashScreen = freecadsplash
+Log: SplashTextColor = #8aadf4
+Log: StartWorkbench = StartWorkbench
+Log: SystemParameter = /home/scott/.config/FreeCAD/system.cfg
+Log: UserAppData = /home/scott/.local/share/FreeCAD/
+Log: UserCachePath = /home/scott/.cache/FreeCAD/Cache/
+Log: UserConfigPath = /home/scott/.config/FreeCAD/
+Log: UserHomePath = /home/scott
+Log: UserMacroPath = /home/scott/.local/share/FreeCAD/Macro/
+Log: UserParameter = /home/scott/.config/FreeCAD/user.cfg
+Log: Verbose = 
+Log: XERCESC_VERSION = 3.2.5
+Log: Create Application
+Log: Run App init script
+Log: Init: starting App::FreeCADInit.py
+Log: Init:   Searching for modules...
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/AddonManager... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Arch... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Assembly... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/CAM... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Draft... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Fem... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Help(Init.py not found)... ignore
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Idf... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Import... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Inspection... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Material... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Measure... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Mesh... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/MeshPart... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/OpenSCAD... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Part... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/PartDesign... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Plot(Init.py not found)... ignore
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Points... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/ReverseEngineering... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Robot... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Show(Init.py not found)... ignore
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Sketcher... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Spreadsheet... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Start... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Surface... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/TechDraw... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Test... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Tux(Init.py not found)... ignore
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Web... done
+Log: Init: Initializing freecad.appimage
+Log: Init: No init module found in freecad.appimage, skipping
+Log: Using /tmp/.mount_FreeCAbAJ1NF/usr/Mod as module path!
+Log: System path after init:
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/bin
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/AddonManager
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Arch
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Assembly
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/CAM
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Draft
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Fem
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Help
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Idf
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Import
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Inspection
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Material
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Measure
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Mesh
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/MeshPart
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/OpenSCAD
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Part
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/PartDesign
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Plot
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Points
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/ReverseEngineering
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Robot
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Show
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Sketcher
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Spreadsheet
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Start
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Surface
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/TechDraw
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Test
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Tux
+Log:    /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Web
+Log:    /usr/local/sbin
+Log:    /usr/local/bin
+Log:    /usr/bin
+Log:    /usr/sbin
+Log:    /sbin
+Log:    /bin
+Log:    /usr/lib/jvm/default-jdk/bin
+Log:    /usr/lib/jvm/default-jre/bin
+Log: Init: App::FreeCADInit.py done
+Log: Init: Creating Gui::Application and QApplication
+Log: Local server 'FreeCAD' started
+Log: OpenGL version is: 4.6 (4.6.0 NVIDIA 550.54.14)
+Log: Run Gui init script
+Log: Init: Running FreeCADGuiInit.py start script...
+Log: Init:   Searching modules...
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/AddonManager... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Arch... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Assembly... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/CAM... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Draft... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Fem... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Help... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Idf(InitGui.py not found)... ignore
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Import... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Inspection... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Material... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Measure(InitGui.py not found)... ignore
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Mesh... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/MeshPart... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/OpenSCAD... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Part... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/PartDesign... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Plot(InitGui.py not found)... ignore
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Points... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/ReverseEngineering... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Robot... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Show(InitGui.py not found)... ignore
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Sketcher... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Spreadsheet... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Start... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Surface... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/TechDraw... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Test... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Tux... done
+Log: Init:      Initializing /tmp/.mount_FreeCAbAJ1NF/usr/Mod/Web... done
+Log: All modules with GUIs using InitGui.py are now initialized
+Log: Init: Initializing freecad.appimage
+Log: Init: Initializing freecad.appimage... done
+Log: All modules with GUIs initialized using pkgutil are now initialized
+Log: Init: Loading FreeCAD GUI
+Log: Init: Running FreeCADGuiInit.py start script... done
+Log: Init: Activating default workbench StartWorkbench
+Log: Loading GUI of Web module... done
+Log: Loading GUI of Start module... done
+Log: Loading Start module... done
+Log: Sandboxing disabled by user.
+Log: Init: Showing main window
+Log: Main window restored
+Log: Show main window
+Log: Toolbars restored
+Log: Couldn't connect to spacenav daemon. Please ignore if you don't have a spacemouse.
+Log: Init: Entering event loop
+Log: Init: Executing event loop...
+Log: Init: Processing command line files
+Log: Module: Part
+Log: Loading Part module... done
+Log: Loading Mesh module... done
+Log: Loading MeshPart module... done
+Err: WARNING: Token 'DOT' defined, but not used
+Err: WARNING: Token 'WORD' defined, but not used
+Err: WARNING: There are 2 unused tokens
+Log: Loading GUI of Part module... done
+Msg: End processing CSG file
+Log: Loading Import module... done
+Wrn: Geometries in cache: 3
+Geometry cache size in bytes: 432
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+   Top level object is a 2D object:
+   Contours:        1
+
+Msg: opening /tmp/fc-17144-983617-000003.dxf...
+Msg: There has been an error:Msg: 
+Msg: First section is not HEADERMsg: 
+Err: Traceback (most recent call last):
+  File "/tmp/.mount_FreeCAbAJ1NF/usr/Mod/OpenSCAD/OpenSCADFeatures.py", line 592, in execute
+    shape = OpenSCAD.OpenSCADUtils.process_ObjectsViaOpenSCADShape(fp.Document,fp.Children,\
+  File "/tmp/.mount_FreeCAbAJ1NF/usr/Mod/OpenSCAD/OpenSCADUtils.py", line 648, in process_ObjectsViaOpenSCADShape
+    return process2D_ObjectsViaOpenSCADShape(children,name,doc)
+  File "/tmp/.mount_FreeCAbAJ1NF/usr/Mod/OpenSCAD/OpenSCADUtils.py", line 590, in process2D_ObjectsViaOpenSCADShape
+    face = importDXFface(tmpfilename,None,None)
+  File "/tmp/.mount_FreeCAbAJ1NF/usr/Mod/OpenSCAD/OpenSCAD2Dgeom.py", line 486, in importDXFface
+    layers = importDXF.processdxf(doc,filename,False,False) or importDXF.layers
+  File "/tmp/.mount_FreeCAbAJ1NF/usr/Mod/Draft/importDXF.py", line 2207, in processdxf
+    drawing = dxfReader.readDXF(filename)
+  File "/home/scott/.local/share/FreeCAD/dxfReader.py", line 403, in readDXF
+    (infile, drawing) = sm.run((infile, None))
+<class 'TypeError'>: cannot unpack non-iterable bool object
+Err: hull: cannot unpack non-iterable bool object
+Log: Hide main window
+Log: Finish: Event loop left
+Log: Destruct Gui::Application
+Log: Couldn't disconnect from spacenav daemon
+Log: FreeCAD terminating...
+Log: Saving system parameter...
+Log: Saving system parameter...done
+Log: Saving user parameter...
+Log: Saving user parameter...done

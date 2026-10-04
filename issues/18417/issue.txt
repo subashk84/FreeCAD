@@ -1,0 +1,54 @@
+TITLE: CAM: TestPathToolController test fails if user settings have insufficient precision
+STATE: open
+AUTHOR: kpemartin
+CREATED: 2024-12-10T16:27:25Z
+UPDATED: 2026-06-05T01:04:18Z
+ASSIGNEES: 
+LABELS: Type: Bug, Mod: CAM, Mod: Test, Topic: Units, Status: Confirmed, Topic: Preferences
+
+### Is there an existing issue for this?
+
+- [X] I have searched the existing issues
+
+### Problem description
+
+If the user Preferences have insufficient precision, the `TestPathToolController` tests fail because the tool diameter of 1.75mm does not make a round-trip accurately enough.
+
+In particular, if the user has selected Imperial decimal units (inches, etc) but not changed the default of 3 decimal places, the test will run with these settings and fail because the round trip passes through the string representation "0.069 in" (perhaps using some other representation for the 'inches' unit), which then converts back to 1.7526mm. This is not within the 0.00001 error allowed by `assertRoughly` so the test fails.
+
+The "0.069" is the 3-digit rounding of the more accurate value of 0.0688976377952755905511811023622 inches.
+
+Conversely, the test also uses `assertRoughly` for other checks even though there is no reason the values should not be exactly equal.
+
+The test should set the precision and units sufficiently to assure the round-trip value is accurate, or use a more lenient error threshold based on the units and precision. If the test changes the settings it must restore them on exit.
+
+It is not clear how the test can effectively change these settings. Although it could (probably) reach in and alter the Parameters in `User parameter:BaseApp/Preferences/Units/Decimals` and `.../UserSchema` it does not appear, from reading the code, that this will have an immediate effect on calculations. These parameters are not monitored for changes, and the actual values used for calculations are only set based on these parameters at certain points, notably when changed Preferences are saved or applied.
+
+On the other hand, changing `assertRoughly` to evaluate an epsilon based on these two settings might produce false positive tests if there is actually an error but it is masked by the current Preferences. On the other (other) hand, doing this would allow tests to be run under various Preferences, avoiding the failure to ever detect an error that only occurs with non-standard Preferences.
+
+### Full version info
+
+```shell
+OS: Windows 10 build 19045
+Architecture: x86_64
+Version: 1.1.0dev.39292 (Git)
+Build type: Release
+Branch: Issue16849
+Hash: 15cfe9d2df30d96d6773c53a1b80ea038d11f3a0
+Python 3.12.4, Qt 6.7.2, Coin 4.0.2, Vtk 9.3.0, OCC 7.8.0
+Locale: English/Canada (en_CA)
+Stylesheet/Theme/QtStyle: FreeCAD Light.qss/FreeCAD Classic/
+```
+
+
+### Subproject(s) affected?
+
+None
+
+### Anything else?
+
+This was spun off #18315 since it was not relevant to the Draft module assigned to that Issue.
+
+### Code of Conduct
+
+- [X] I agree to follow this project's Code of Conduct

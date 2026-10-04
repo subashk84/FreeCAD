@@ -1,0 +1,54 @@
+TITLE: [Draft/Bim] The panel with active layers displays the active layer even if it is not there (when changing the document or closing it).
+STATE: open
+AUTHOR: kaiwas
+CREATED: 2025-02-17T14:28:05Z
+UPDATED: 2026-09-04T16:31:58Z
+ASSIGNEES: 
+LABELS: Type: Bug, Mod: BIM, Mod: Draft, Status: Confirmed
+
+### Is there an existing issue for this?
+
+- [x] I have searched the existing issues
+
+### Problem description
+
+When switching the document or closing it, the last selected one is displayed in the panel of active layers. That is, the panel is not updated.
+
+Demonstration on video.
+
+https://github.com/user-attachments/assets/f3583c29-91e2-43f0-b8c5-c6fb3c021dc9
+
+### Full version info
+
+```shell
+OS: Manjaro Linux (KDE/plasma/xcb)
+Architecture: x86_64
+Version: 1.1.0dev.40253 (Git) Conda AppImage
+Build type: Release
+Branch: main
+Hash: e16c462916a050909ad107e4f1ac2e0e5990389d
+Python 3.11.9, Qt 5.15.13, Coin 4.0.3, Vtk 9.2.6, IfcOpenShell 0.7.0, OCC 7.7.2
+Locale: Russian/Russia (ru_RU)
+Stylesheet/Theme/QtStyle: OpenLight.qss/OpenLight/Fusion
+Logical/physical DPI: 96/91.7938
+Installed mods: 
+  * FreeCAD_SketchArch
+  * PitchedRoof
+  * Road 2025.2.6
+  * addFC 1.3.0
+  * freecad.gears 1.3.0
+  * sheetmetal 0.7.11
+  * OpenTheme 2024.9.1
+```
+
+### Subproject(s) affected?
+
+Draft
+
+### Anything else?
+
+_No response_
+
+### Code of Conduct
+
+- [x] I agree to follow this project's Code of Conduct

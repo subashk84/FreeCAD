@@ -1,0 +1,70 @@
+
+----- 2025-02-18 yorikvanhavre -----
+I guess we need a doc observer here that rebuilds the list when changing the document. But the more tricky part is that it should then remember the state per document, and reapply it on switch.
+
+----- 2025-02-18 kaiwas -----
+> the state per document, and reapply it on switch.
+
+It's probably somehow related
+https://github.com/FreeCAD/FreeCAD/issues/19664
+
+----- 2025-11-04 github-actions[bot] -----
+Hi! This issue hasn’t seen activity in a while. We automatically check each issue after 190 days without activity to keep the backlog tidy.
+If it’s still relevant, please update to the latest FreeCAD weekly build [download here](https://github.com/FreeCAD/FreeCAD/releases/) to see if the issue is already resolved.
+
+If the issue is still relevant, let us know by adding a comment.
+Otherwise, we’ll close this issue automatically in 60 days.
+
+Feel free to comment anytime to keep it open. Closed issues can always be reopened.
+Thanks for helping improve FreeCAD!
+
+Access additional [FreeCAD](https://freecad.org) resources:
+  - **Forum**: https://forum.freecad.org
+  - **Blog**: https://blog.freecad.org
+  - **Wiki**: https://wiki.freecad.org
+
+----- 2025-11-04 FEA-eng -----
+@kaiwas Can you confirm if this issue is still relevant?
+
+----- 2025-11-05 kaiwas -----
+> is still relevant
+
+ is still relevant
+
+----- 2026-05-15 github-actions[bot] -----
+Hi! This issue hasn’t seen activity in a while. We automatically check each issue after 190 days without activity to keep the backlog tidy.
+If it’s still relevant, please update to the latest FreeCAD weekly build [download here](https://github.com/FreeCAD/FreeCAD/releases/) to see if the issue is already resolved.
+
+If the issue is still relevant, let us know by adding a comment.
+Otherwise, we’ll close this issue automatically in 60 days.
+
+Feel free to comment anytime to keep it open. Closed issues can always be reopened.
+Thanks for helping improve FreeCAD!
+
+Access additional [FreeCAD](https://freecad.org) resources:
+  - **Forum**: https://forum.freecad.org
+  - **Blog**: https://blog.freecad.org
+  - **Wiki**: https://wiki.freecad.org
+
+----- 2026-05-15 FEA-eng -----
+@kaiwas Since multi-document editing functionality was added, it's possible that something has changed in this regard. I'm not sure how to reproduce the issue (e.g. how to add layers to the BIM Views Manager).
+
+----- 2026-05-15 semhustej -----
+The issue is still valid.
+
+```
+OS: Debian GNU/Linux 13 (trixie) (GNOME/gnome-xorg/xcb)
+Architecture: x86_64
+Version: 1.2.0dev.20260512 (Git shallow) AppImage
+Build date: 2026/05/12 17:54:42
+Build type: Release
+Branch: grafted,grafted
+Hash: 758570d19c79cc4cf8b1e198b5568e7263e8e6d8
+Python 3.11.14, Qt 6.8.3, Coin 4.0.8, Vtk 9.3.1, boost 1_86, Eigen3 3.4.0, PySide 6.8.3
+shiboken 6.8.3, xerces-c 3.3.0, IfcOpenShell 0.8.2, OCC 7.8.1
+Locale: English/Ireland (en_IE)
+Stylesheet/Theme/QtStyle: FreeCAD.qss/FreeCAD Light/
+Navigation Style/Orbit Style/Rotation Mode: Revit/Rounded Arcball/Window center
+Logical DPI/Physical DPI/Pixel Ratio: 96/92.6073/1
+
+```

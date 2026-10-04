@@ -1,0 +1,6 @@
+! ----- names for bodies -----
+$ Solid1 = 2
+! ----- names for boundaries -----
+$ Face5 = 1
+$ bnry3 = 3
+$ bnry4 = 4

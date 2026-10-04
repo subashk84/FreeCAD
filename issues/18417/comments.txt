@@ -1,0 +1,65 @@
+
+----- 2024-12-10 kpemartin -----
+`PathTestUtils.PathTestBase` could be given a `setUp` method, called from the derived-class `setUp` methods, which evaluates a default error for `assertRoughly` based on the Preferences. It might also complain (warn) if the allowed error becomes absurdly large because of strange Preferences, though the definition of "absurdly large" is somewhat arbitrary...
+
+For this to work, all the derived test's `setUp` methods would have to call this, but they should probably really be doing this anyway for form's sake even though the base-class method `unittest.TestCase.setUp` does nothing.
+
+----- 2025-01-22 kpemartin -----
+Why should `PathTestBase.assertRoughly` (compare two numeric value for near-equality) and `PathTestBase.assertCoincide` (compare two points for near-equality) use different allowed error values? The former error defaults to 0.00001, the latter to 0.0001 (ten times more).
+
+
+----- 2025-01-22 kpemartin -----
+Maybe trying to dynamically generate an error epsilon is not the right approach:
+1. A different epsilon is used to compare the coordinates of compared (x,y,z) points than for comparing scalar values
+2. This epsilon is also used, for instance, for comparing values that are not in measurement units (for instance the rotation axis for a Placement, which is a normalized unit-less direction vector)
+3. The default compare epsilon of 0.00001 (mm) does not match the default Preferences settings of 0.01 mm (that is, metric measurement system with 2 precision digits). If the test specified more non-zero decimal digits on some of the numbers it uses to set up the test, it would fail even with default Preferences.
+
+----- 2025-01-22 kpemartin -----
+I'm starting to wonder if the flaw lies entirely elsewhere. The test case is expecting, for instance, to extract a set of attributes from a `PathToolController` using `templateAttrs()`, then make a new identical `PathToolController` from these attributes using `PathToolController.FromTemplate()`.
+
+The returned templateAttrs value is a dictionary keyed by attribute name string, with values also being strings which for distances and coordinates consist of a number and a unit. The precision in those numbers appears to be governed by the decimal digits in Preferences. The actual code uses the Python formatting operation, for instance `"%s" % (obj.VertFeed)` which ultimately uses the decimal digits Preference (as well as the units system).
+
+I would argue that either the test should not be doing this because it is an unreliable operation at the mercy of Preferences, or `templateAttrs` (and similar methods on other objects) should be formatting the numeric values with precision suitable for round-trip conversion.
+
+This can happen anywhere a number is converted to text and later back to a number expecting to get the original value.
+
+For instance this means that the user can unwittingly change the value of an object's property if the precision in Preferences causes it to be rounded, the user clicks `f(x)` to bring up the Expression editor form, and quits from the form using `Ok` instead of dismissing the form with the Close "X" in the title bar or the Escape key. This will change the original value to the rounded value shown in the Expression editor form.
+
+----- 2025-09-14 github-actions[bot] -----
+Hi! This issue hasn’t seen activity in a while. We automatically check each issue after 190 days without activity to keep the backlog tidy.
+If it’s still relevant, please update to the latest FreeCAD weekly build [download here](https://github.com/FreeCAD/FreeCAD/releases/) to see if the issue is already resolved.
+
+If the issue is still relevant, let us know by adding a comment.
+Otherwise, we’ll close this issue automatically in 60 days.
+
+Feel free to comment anytime to keep it open. Closed issues can always be reopened.
+Thanks for helping improve FreeCAD!
+
+Access additional [FreeCAD](https://freecad.org) resources:
+  - **Forum**: https://forum.freecad.org
+  - **Blog**: https://blog.freecad.org
+  - **Wiki**: https://wiki.freecad.org
+
+----- 2025-09-14 FEA-eng -----
+Might be good to add CAM label here.
+
+----- 2026-06-04 github-actions[bot] -----
+Hi! This issue hasn’t seen activity in a while. We automatically check each issue after 190 days without activity to keep the backlog tidy.
+If it’s still relevant, please update to the latest FreeCAD weekly build [download here](https://github.com/FreeCAD/FreeCAD/releases/) to see if the issue is already resolved.
+
+If the issue is still relevant, let us know by adding a comment.
+Otherwise, we’ll close this issue automatically in 60 days.
+
+Feel free to comment anytime to keep it open. Closed issues can always be reopened.
+Thanks for helping improve FreeCAD!
+
+Access additional [FreeCAD](https://freecad.org) resources:
+  - **Forum**: https://forum.freecad.org
+  - **Blog**: https://blog.freecad.org
+  - **Wiki**: https://wiki.freecad.org
+
+----- 2026-06-04 FEA-eng -----
+I assume it's still relevant.
+
+----- 2026-06-04 kpemartin -----
+I also believe it is still relevant, and is more pervasive than just some test failing under some circumstances. Perhaps the underlying issues should be spun off on their own so they can get more of the attention they might deserve.

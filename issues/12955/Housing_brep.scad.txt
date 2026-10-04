@@ -1,0 +1,164 @@
+// Housings.scad — BREP-friendly, working version
+$fn = 20;
+fudge = 0.1;
+
+//include <eCAD/KiCADColors.scad>
+
+showTops = true;
+showBottoms = true;
+
+LK_DR01();
+
+colors = ["red","blue","green","yellow","orange","purple"];
+
+module LK_DR01(){
+  // https://de.aliexpress.com/item/1005003780874145.html
+  ovDims = [87.5, 36.5, 45.5];
+  crnrRad = 1;
+  cutOutDims = [0, 26, 11.2];
+  labelRecess = [43, 32.5, 1.5];
+  lvrDims = [32.5, 14, 3.6];
+  lvrXOffset = -4.2;
+  
+  botCutout = [36, ovDims[1], 4.5];
+  botCutoutOffset = [-0.5, 0, 0];
+  botInHght = 7.8;
+  
+  mntSpacing = [51,22];
+  
+  wallThck = 2;
+  
+  // define topCorners of staircase type housing: array of [x,y,z]
+  topCorners = [
+    [87.5,36.5,0],
+    [86.75,36.35,17.1],
+    [61.35,36.35,17.1],
+    [60.9,36.1,36.25],
+    [47.5,36.1,36.25],
+    [47.15,35.8,45.5]
+  ];
+  bottomCorners = [[87.5,36.5,0],[87.1,36.1,-13]];
+  
+  // --- Tops ---
+  if (showTops)
+    color(blackBodyCol)
+      difference() {
+        body();
+        body(true); // hollow
+        translate([0,0,(cutOutDims[2]-fudge)/2])
+          cube([ovDims[0]+fudge, cutOutDims[1], cutOutDims[2]+fudge], true);
+        translate([0,0, ovDims[2] - (labelRecess[2]-fudge)/2])
+          cube([labelRecess[0], labelRecess[1], labelRecess[2] + fudge], true);
+      }
+  
+  // --- Bottoms ---
+  if (showBottoms) {
+    color(blackBodyCol)
+      difference(){
+        bottom();
+        translate([0,0,fudge]) bottom(true);
+        translate([0,0, bottomCorners[1][2] + (botCutout[2]-fudge)/2] + botCutoutOffset)
+          cube([botCutout[0], botCutout[1] + fudge, botCutout[2] + fudge], true);
+        translate([-(ovDims[0] - lvrDims[0])/2, 0, bottomCorners[1][2] - fudge/2])
+          linear_extrude(lvrDims[2] + fudge)
+            square([lvrDims[0], lvrDims[1] + fudge], true);
+      }
+    
+    // mounting posts
+    color(blackBodyCol)
+      for (i=[0,1]) 
+        mirror([0,i,0]) mirror([i,0,0])
+          translate([mntSpacing[0]/2, mntSpacing[1]/2, -botInHght])
+            difference(){
+              cylinder(d1=5.2, d2=5, h=6.2);
+              translate([0,0,-fudge/2]) cylinder(d=2.5, h=6.2+fudge);
+            }
+    // lever
+    color(redBodyCol)
+      translate([-(ovDims[0]-lvrDims[0])/2 + lvrXOffset, 0, bottomCorners[1][2]])
+        linear_extrude(lvrDims[2])
+          square([lvrDims[0], lvrDims[1]], true);
+  }
+  
+  // ----------------------------------------------------------
+  // BREP-friendly helpers (no hull(), no nested module defs)
+  // ----------------------------------------------------------
+  
+  // safe clamp function for sizes
+  function _safe(v) = (v <= 0) ? 0.001 : v;
+  
+  // centered rounded rectangle using 2D offset polygon
+  module _rounded_rect_2d(xsize, ysize, r) {
+    _x = _safe(xsize);
+    _y = _safe(ysize);
+    translate([-_x/2, -_y/2])
+      offset(r = r)
+        polygon(points = [[0,0], [_x,0], [_x,_y], [0,_y]]);
+  }
+  
+  // loft-like connection (rounded rectangles) using linear_extrude + scale
+  module _rounded_loft(ax, ay, az, bx, by, bz, r) {
+    _ax = _safe(ax);
+    _ay = _safe(ay);
+    _bx = _safe(bx);
+    _by = _safe(by);
+    _h = bz - az;
+    _h = (abs(_h) < 1e-6) ? 0.001 : _h;
+    _sx = _bx / _ax;
+    _sy = _by / _ay;
+    translate([0,0, min(az,bz)])
+      linear_extrude(height = abs(_h), scale = [_sx, _sy])
+        _rounded_rect_2d(_ax, _ay, r);
+  }
+  
+  // ----------------------------------------------------------
+  // body - replaced hull() with rounded lofts between corner rectangles
+  // ----------------------------------------------------------
+  module body(cut=false) {
+    crnrOffset = cut ? wallThck : crnrRad;
+    rad = cut ? 0.01 : crnrRad;
+    difference() {
+      union() {
+        // iterate original indices 0,2,4
+        for (i = [0:2:4]) {
+          // bind locals with let to avoid reassign in if
+          let (
+            ax = topCorners[i][0]  - 2*crnrOffset,
+            ay = topCorners[i][1]  - 2*crnrOffset,
+            bx = topCorners[i+1][0] - 2*crnrOffset,
+            by = topCorners[i+1][1] - 2*crnrOffset,
+            zOffset = (i == 0) ? 0 : -crnrOffset,
+            ztop = topCorners[i][2] + zOffset,
+            zbot = topCorners[i+1][2] - crnrOffset
+          )
+          _rounded_loft(ax, ay, ztop, bx, by, zbot, rad);
+        }
+      }
+      // small flat cap like original
+      if (!cut)
+        translate([0,0,-rad]) cube([topCorners[0][0], topCorners[0][1], rad*2], true);
+    }
+  }
+  
+  // ----------------------------------------------------------
+  // bottom - mostly unchanged, uses offset() + extrude (BREP-friendly)
+  // ----------------------------------------------------------
+  module bottom(cut=false) {
+    sFact = [ bottomCorners[0][0]/bottomCorners[1][0], bottomCorners[0][1]/bottomCorners[1][1] ];
+    crnrOffset = cut ? wallThck : crnrRad;
+    rad = cut ? 0 : crnrRad;
+    height = cut ? -botInHght : bottomCorners[1][2];
+    
+    translate([0,0,height])
+      linear_extrude(-height, scale = sFact, convexity = 3)
+        difference() {
+          offset(rad) square([bottomCorners[1][0] - crnrOffset*2, bottomCorners[1][1] - crnrOffset*2], true);
+          if (cut)
+            for (iy=[-1,1]) translate([0, iy*(bottomCorners[1][1]/2 - wallThck*1.5)]) square([12, wallThck], true);
+          else
+            for (iy=[-1,1]) translate([0, iy*(bottomCorners[1][1]/2 - wallThck/2)]) square([8.1, wallThck], true);
+        }
+  }
+  
+} // end module LK
+
