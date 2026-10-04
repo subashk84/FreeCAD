@@ -19,7 +19,10 @@ human verifies and submits it. See `SESSION_RULES.md`.
 | `bin/fc-gui` | Run FreeCAD with its GUI on a virtual display |
 | `bin/overlay.sh` | Copy changed Python files into the weekly build, and undo it |
 | `bin/gui_script_template.py` | Starting point for a GUI reproduction script |
-| `issues/<number>/` | Issue text, comments and attachments, saved from upstream |
+| `bin/fetch-issue.sh` | Contributor's machine: save an upstream issue into `issues/<number>/` |
+| `bin/verify-branch.sh` | Contributor's machine: check a session's fix branch on a local weekly build |
+| `PROMPT_TEMPLATE.md` | The first message for a session, and how sessions are launched |
+| `issues/<number>/` | Issue text, comments, attachments and a `brief.md`, saved from upstream |
 | `notes/<number>.md` | Session reports (on `lab-notes/<number>` branches) |
 
 ## Use in a cloud session
