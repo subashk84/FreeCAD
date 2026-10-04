@@ -41,10 +41,15 @@ fix they can understand and verify. Read these rules before touching anything.
    Python files from the checkout into the weekly build, `bin/overlay.sh restore`
    undoes it. Run your reproduction script and the module's test suite both ways and
    keep the output.
-8. Commit the fix as **one** commit on the fix branch. Subject line:
+8. Formatting: FreeCAD runs `black` on the modules listed under `files:` in
+   `.pre-commit-config.yaml`, at the version and arguments given there. If your files
+   are in such a module, install that black version with pip and run it on the files
+   you changed, and only those. If black rewrites lines you did not touch, the file
+   was not black-clean before; revert those lines and mention it in the notes.
+9. Commit the fix as **one** commit on the fix branch. Subject line:
    `<Module>: <what the commit achieves>`. Keep the body to a few factual lines. The
    human rewrites this message before submitting.
-9. Write the notes (next section) and push both branches.
+10. Write the notes (next section) and push both branches.
 
 ## When the expected behaviour is unclear
 
