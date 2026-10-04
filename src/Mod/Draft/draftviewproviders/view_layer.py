@@ -252,7 +252,15 @@ class ViewProviderLayer:
         if prop == "ShapeAppearance" and not vobj.OverrideShapeAppearanceChildren:
             return
 
-        for target_obj in (targets if targets is not None else vobj.Object.Group):
+        if targets is None:
+            targets = vobj.Object.Group
+        # The source of a mirrored object is nested under it in the tree and
+        # should look the same. Visibility is left alone: a source may have
+        # been hidden on purpose.
+        if prop != "Visibility":
+            targets = targets + self._get_mirror_sources(targets)
+
+        for target_obj in targets:
             target_vobj = target_obj.ViewObject
 
             if hasattr(target_vobj, prop):
@@ -269,6 +277,24 @@ class ViewProviderLayer:
                             getattr(target_vobj, target_prop), old_prop
                         ):
                             setattr(target_vobj, target_prop, getattr(vobj, prop))
+
+    def _get_mirror_sources(self, objs):
+        """Return the sources of the Part::Mirroring objects in objs.
+
+        A source is only included if the mirror is its only parent and if it
+        is not in a layer itself. The sources of nested mirrors are included too.
+        """
+        sources = []
+        for obj in objs:
+            while obj.TypeId == "Part::Mirroring":
+                src = obj.Source
+                if src is None or src in sources or set(src.InList) != {obj}:
+                    break
+                if get_layer(src) is not None:
+                    break
+                sources.append(src)
+                obj = src
+        return sources
 
     def onBeforeChange(self, vobj, prop):
         if prop in ("LineColor", "ShapeAppearance", "LineWidth", "DrawStyle", "Visibility"):
