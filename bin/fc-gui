@@ -4,13 +4,37 @@
 #   bin/fc-gui script.py
 #   bin/fc-gui -t TestDraftGui
 # A script must close FreeCAD itself when it is done, see README.md.
+#
+# FC_GUI_MODE=xvfb (default when xvfb-run exists) or offscreen.
 set -euo pipefail
 FC_HOME="${FC_HOME:-$HOME/fc-weekly}"
-export FREECAD_USER_HOME="${FREECAD_USER_HOME:-${TMPDIR:-/tmp}/fc-lab-profile}"
-mkdir -p "$FREECAD_USER_HOME"
-if command -v xvfb-run >/dev/null 2>&1; then
+LAB_TMP="${TMPDIR:-/tmp}"
+export FREECAD_USER_HOME="${FREECAD_USER_HOME:-$LAB_TMP/fc-lab-profile}"
+# A private font cache. FreeCAD bundles its own fontconfig, and a shared
+# ~/.cache/fontconfig written by other programs can crash it at start-up.
+export XDG_CACHE_HOME="${FC_CACHE_HOME:-$LAB_TMP/fc-lab-cache}"
+mkdir -p "$FREECAD_USER_HOME" "$XDG_CACHE_HOME"
+# Never attach to a real desktop session.
+unset WAYLAND_DISPLAY
+
+mode="${FC_GUI_MODE:-}"
+if [ -z "$mode" ]; then
+    if command -v xvfb-run >/dev/null 2>&1; then mode=xvfb; else mode=offscreen; fi
+fi
+
+case "$mode" in
+xvfb)
     exec timeout "${FC_TIMEOUT:-600}" xvfb-run -a -s "-screen 0 1280x1024x24" \
         "$FC_HOME/AppRun" "$@" </dev/null
-fi
-export QT_QPA_PLATFORM=offscreen
-exec timeout "${FC_TIMEOUT:-600}" "$FC_HOME/AppRun" "$@" </dev/null
+    ;;
+offscreen)
+    # The AppImage launcher ignores QT_QPA_PLATFORM and reads this instead.
+    unset DISPLAY
+    export FREECAD_QT_QPA_PLATFORM=offscreen
+    exec timeout "${FC_TIMEOUT:-600}" "$FC_HOME/AppRun" "$@" </dev/null
+    ;;
+*)
+    echo "fc-gui: unknown FC_GUI_MODE '$mode' (use xvfb or offscreen)" >&2
+    exit 2
+    ;;
+esac

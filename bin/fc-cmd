@@ -6,6 +6,8 @@
 # Uses a throwaway profile so results do not depend on anyone's preferences.
 set -euo pipefail
 FC_HOME="${FC_HOME:-$HOME/fc-weekly}"
-export FREECAD_USER_HOME="${FREECAD_USER_HOME:-${TMPDIR:-/tmp}/fc-lab-profile}"
-mkdir -p "$FREECAD_USER_HOME"
+LAB_TMP="${TMPDIR:-/tmp}"
+export FREECAD_USER_HOME="${FREECAD_USER_HOME:-$LAB_TMP/fc-lab-profile}"
+export XDG_CACHE_HOME="${FC_CACHE_HOME:-$LAB_TMP/fc-lab-cache}"
+mkdir -p "$FREECAD_USER_HOME" "$XDG_CACHE_HOME"
 exec timeout "${FC_TIMEOUT:-600}" "$FC_HOME/usr/bin/freecadcmd" "$@" </dev/null

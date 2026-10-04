@@ -46,8 +46,16 @@ bin/fc-cmd -t TestDraft             # a console unit test module
 bin/fc-gui -t TestDraftGui          # a GUI unit test module
 ```
 
-Both wrappers use a throwaway profile in `/tmp/fc-lab-profile`, so results do not
-depend on stored preferences, and both stop after `FC_TIMEOUT` seconds (default 600).
+Both wrappers use a throwaway profile in `/tmp/fc-lab-profile` and a private font
+cache in `/tmp/fc-lab-cache`, so results do not depend on stored preferences or on
+other programs' font caches. Both stop after `FC_TIMEOUT` seconds (default 600).
+
+`bin/fc-gui` uses a virtual X display when `xvfb-run` is installed. Set
+`FC_GUI_MODE=offscreen` to use Qt's offscreen platform instead; it prints a harmless
+"Failed to create context" line because there is no OpenGL.
+
+Checked on weekly-2026.10.01 (FreeCAD 26.3.0): `TestDraft` runs 85 tests and
+`TestDraftGui` runs 38, all passing on the unmodified build.
 
 ## Testing a fix
 
