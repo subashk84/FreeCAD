@@ -40,16 +40,31 @@ else
     echo "bootstrap: extracted to $FC_HOME"
 fi
 
-# A virtual display for scripts that need the GUI. Not fatal if it cannot be
-# installed: bin/fc-gui falls back to Qt's offscreen platform.
-if ! command -v xvfb-run >/dev/null 2>&1; then
-    sudo=""
-    if [ "$(id -u)" != "0" ]; then sudo="sudo -n"; fi
-    if $sudo apt-get update -qq && $sudo apt-get install -y -qq xvfb >/dev/null; then
-        echo "bootstrap: installed xvfb"
+# A virtual display and the system libraries Qt's X11 platform needs. Only done
+# as root (a cloud session); on a desktop these are normally present already.
+# Not fatal: bin/fc-gui can fall back to Qt's offscreen platform.
+if [ "$(id -u)" = "0" ] && command -v apt-get >/dev/null 2>&1; then
+    if apt-get update -qq >/dev/null 2>&1 &&
+        apt-get install -y -qq xvfb libegl1 libgl1 libxkbcommon-x11-0 libxcb-cursor0 >/dev/null 2>&1; then
+        echo "bootstrap: display packages installed"
     else
-        echo "bootstrap: WARNING, xvfb not installed; fc-gui will use the offscreen platform"
+        echo "bootstrap: WARNING, could not install display packages"
     fi
 fi
 
 "$HERE/fc-cmd" --version
+
+# Find a GUI mode that works here and say which.
+for mode in xvfb offscreen; do
+    if [ "$mode" = "xvfb" ] && ! command -v xvfb-run >/dev/null 2>&1; then continue; fi
+    if FC_GUI_MODE="$mode" FC_TIMEOUT=180 "$HERE/fc-gui" "$HERE/gui_smoke.py" 2>/dev/null |
+        grep -q GUI_SMOKE_OK; then
+        echo "bootstrap: GUI scripts work with FC_GUI_MODE=$mode"
+        if [ "$mode" = "offscreen" ]; then
+            echo "bootstrap: xvfb mode failed, export FC_GUI_MODE=offscreen before using bin/fc-gui"
+        fi
+        exit 0
+    fi
+done
+echo "bootstrap: WARNING, the GUI smoke test failed in every mode; see bin/fc-gui" >&2
+exit 1
