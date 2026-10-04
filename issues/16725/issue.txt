@@ -1,0 +1,51 @@
+TITLE: Draft: When moving Draft_Mirrored elements to layer, source objects do not take over layer properties
+STATE: open
+AUTHOR: semhustej
+CREATED: 2024-09-22T09:06:49Z
+LABELS: Type: Bug, Mod: Draft, Status: Confirmed
+
+### Is there an existing issue for this?
+
+- [X] I have searched the existing issues
+
+### Problem description
+
+When moving Draft_Mirrored elements to layer, only the copied/mirrored elements take over layer properties.
+
+Steps to reproduce:
+
+1. Open test file [FC-mirrored-object-layer.zip](https://github.com/user-attachments/files/17088935/FC-mirrored-object-layer.zip)
+2. Drag and drop the Rectangle (mirrored) element to 'Test layer' in the project tree
+3. Only 1/2 of the object takes over the layer properties (line color, line type, fill color, etc.). The base object for the mirror remains with the original properties
+
+![mirrored-layer](https://github.com/user-attachments/assets/60be2890-195b-471e-8edf-9006d68754ed)
+
+
+
+
+### Full version info
+
+```shell
+OS: Windows 10 build 19045
+Word size of FreeCAD: 64-bit
+Version: 1.1.0dev.38794 (Git)
+Build type: Release
+Branch: main
+Hash: a47800d9ccd7d7a7cdb1779d56de03d3c64cd76e
+Python 3.11.9, Qt 5.15.13, Coin 4.0.3, Vtk 9.2.6, OCC 7.7.2
+Locale: English/United States (en_US)
+Stylesheet/Theme/QtStyle: unset/FreeCAD Classic/Qt default
+```
+
+
+### Subproject(s) affected?
+
+Draft
+
+### Anything else?
+
+_No response_
+
+### Code of Conduct
+
+- [X] I agree to follow this project's Code of Conduct

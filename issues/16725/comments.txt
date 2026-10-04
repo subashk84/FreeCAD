@@ -1,0 +1,111 @@
+
+----- 2024-09-23 yorikvanhavre -----
+This is indeed the case, you need to move the base object to the layer too.
+
+I'm not sure this is a bug? Isn't this the most "expected" behaviour?
+
+----- 2024-09-24 semhustej -----
+> This is indeed the case, you need to move the base object to the layer too.
+> 
+> I'm not sure this is a bug? Isn't this the most "expected" behaviour?
+
+I see - you have to first move base object to the layer and then assign the mirror operation to it. 
+
+This is the behavior as I understand it:
+1. Once the mirror operation is assigned to the base object, there is no way to move the base object to the layer. The user has to Draft_Downgrade the mirror and than he/she can move both objects to the layer.
+2. When mirrored object is moved to the layer, the base object is move together with the mirror object. It is not on any other place in the model tree, but does not take over the properties of the layer. This seems unintuitive to me, but I am just getting used to how model tree works.
+![base-object](https://github.com/user-attachments/assets/29495fcd-6c45-445c-991c-ab6d2cd84396)
+
+
+If this behavior is intended, the issue can be closed.
+
+----- 2024-09-26 semhustej -----
+There is one more case, where mirrored object behavior does not make sense to me: when I am placing it on a TechDraw page as part of a group or a layer:
+
+https://github.com/user-attachments/assets/21c544c4-4a33-48b4-9b39-c0c19e072fdf
+
+
+I think I will just have to recalibrate how to handle mirrored objects, based on FreeCAD's behavior.
+
+----- 2025-03-09 maxwxyz -----
+Adding from #18309 
+Changing Draft Layer shape appearance, e.g. shape appearance color or transparency does not change the appearance of children / elements inside that layer.
+
+Steps to reproduce:
+
+1. Create a layer
+2. Change shape appearance of the layer
+3. Move objects in the layer
+
+![Image](https://github.com/user-attachments/assets/a1074610-78f9-4af3-a9c6-5c4fe648774e)
+
+----- 2025-10-19 github-actions[bot] -----
+Hi! This issue hasn’t seen activity in a while. We automatically check each issue after 190 days without activity to keep the backlog tidy.
+If it’s still relevant, please update to the latest FreeCAD weekly build [download here](https://github.com/FreeCAD/FreeCAD/releases/) to see if the issue is already resolved.
+
+If the issue is still relevant, let us know by adding a comment.
+Otherwise, we’ll close this issue automatically in 60 days.
+
+Feel free to comment anytime to keep it open. Closed issues can always be reopened.
+Thanks for helping improve FreeCAD!
+
+Access additional [FreeCAD](https://freecad.org) resources:
+  - **Forum**: https://forum.freecad.org
+  - **Blog**: https://blog.freecad.org
+  - **Wiki**: https://wiki.freecad.org
+
+----- 2025-10-19 FEA-eng -----
+Still relevant
+
+```
+OS: Windows 11 build 26100
+Architecture: x86_64
+Version: 1.1.0dev.14555 (Git shallow)
+Build date: 2025/10/14 15:14:51
+Build type: Release
+Branch: main
+Hash: 41ce37233d64c81c2f105de085635d4dcd669943
+Python 3.11.14, Qt 6.8.3, Coin 4.0.3, Vtk 9.3.1, boost 1_86, Eigen3 3.4.0, PySide 6.8.3
+shiboken 6.8.3, xerces-c 3.3.0, IfcOpenShell 0.8.2, OCC 7.8.1
+Locale: Polish/Poland (pl_PL)
+Navigation Style/Orbit Style/Rotation Mode: Blender/Rounded Arcball/Window center
+Stylesheet/Theme/QtStyle: FreeCAD.qss/FreeCAD Light/
+Logical DPI/Physical DPI/Pixel Ratio: 96/81.5973/1
+```
+
+----- 2025-12-11 luzpaz -----
+Anyone with a proposed solution ?
+
+----- 2026-06-20 github-actions[bot] -----
+Hi! This issue hasn’t seen activity in a while. We automatically check each issue after 190 days without activity to keep the backlog tidy.
+If it’s still relevant, please update to the latest FreeCAD weekly build [download here](https://github.com/FreeCAD/FreeCAD/releases/) to see if the issue is already resolved.
+
+If the issue is still relevant, let us know by adding a comment.
+Otherwise, we’ll close this issue automatically in 60 days.
+
+Feel free to comment anytime to keep it open. Closed issues can always be reopened.
+Thanks for helping improve FreeCAD!
+
+Access additional [FreeCAD](https://freecad.org) resources:
+  - **Forum**: https://forum.freecad.org
+  - **Blog**: https://blog.freecad.org
+  - **Wiki**: https://wiki.freecad.org
+
+----- 2026-06-20 FEA-eng -----
+Still relevant
+
+```
+OS: Windows 10 build 19045
+Architecture: x86_64
+Version: 26.3.0dev.20260619 (Git shallow)
+Build date: 2026/06/19 20:12:16
+Build type: Release
+Branch: (HEAD detached at 4109e5de6)
+Hash: 4109e5de6baa83b0630a8b999c016d744f165bc8
+Python 3.11.14, Qt 6.8.3, Coin 4.0.3, Vtk 9.3.1, boost 1_86, Eigen3 3.4.0, PySide 6.8.3
+shiboken 6.8.3, xerces-c 3.3.0, Clipper2 , IfcOpenShell 0.8.2, OCC 7.8.1
+Locale: Polish/Poland (pl_PL) [ OS: Polish/Poland (pl_PL) ]
+Stylesheet/Theme/QtStyle: FreeCAD.qss/FreeCAD Light/
+Navigation Style/Orbit Style/Rotation Mode: Touchpad/Rounded Arcball/Window center
+Logical DPI/Physical DPI/Pixel Ratio: 96/113.268/1.25
+```
