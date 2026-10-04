@@ -1,0 +1,66 @@
+TITLE: BIM: IfcProperties not possible to work with custom property set named without Pset_ prefix in the CustomPsets.csv
+STATE: open
+AUTHOR: semhustej
+CREATED: 2025-03-21T17:33:11Z
+UPDATED: 2026-09-16T19:36:32Z
+ASSIGNEES: 
+LABELS: Type: Bug, Mod: BIM, Status: Confirmed, no-auto-close
+
+### Is there an existing issue for this?
+
+- [x] I have searched the existing issues
+
+### Problem description
+
+Steps to reproduce:
+
+- define property set without `Pset_` prefix using with some properties in  CustomPsets.csv in $USERAPPDATA/BIM folder (sample file here: 
+
+[CustomPsets.csv](https://github.com/user-attachments/files/19394274/CustomPsets.csv)
+
+- open BIM_IfcProperties dialogue in any file with BIM objects
+- select one BIM object
+- choose `Add propert set ...`
+- the custom property set is not named correctly
+- it is not possible to assign that custom property set to the object
+
+See behavior in the video:
+
+https://github.com/user-attachments/assets/1d8153cb-5e7e-4647-be92-e873649065de
+
+
+Even if the property set is named with `Pset_` prefix, the name is displayed incorrectly in the drop down menu (e.g. Free C A D instead of FreeCAD)
+
+![Image](https://github.com/user-attachments/assets/306b9108-116b-4a56-9c25-288718b896fc)
+
+
+### Full version info
+
+```shell
+OS: Windows 10 build 19045
+Architecture: x86_64
+Version: 1.1.0dev.40504 (Git) Conda
+Build type: Release
+Branch: main
+Hash: 855ad6c70904f911b2ce7114dd1a5bc24da98bd1
+Python 3.11.11, Qt 5.15.15, Coin 4.0.3, Vtk 9.3.0, IfcOpenShell 0.0.0, OCC 7.8.1
+Locale: English/United States (en_US)
+Stylesheet/Theme/QtStyle: FreeCAD Light.qss/FreeCAD Light/Fusion
+Logical/physical DPI: 96/92.6073
+```
+
+### Subproject(s) affected?
+
+BIM
+
+### Anything else?
+
+1. In practice, the `Pset_` prefix should be used only for property sets defined by the IFC schema. It is highly recommended to NOT use `Pset_` prefix for custom property sets. It is almost considered a crime :). FreeCAD's functionality should work without the `Pset_` prefix.
+
+2. FreeCAD wiki breaks the above mentioned IfcGentleman's rule - showing Pset_FreeCAD as an example. This should be fixed.
+
+3. I tried to get wiki editing rights but I did not receive any answer. If I get those rights, I could correct the text on wiki.
+
+### Code of Conduct
+
+- [x] I agree to follow this project's Code of Conduct

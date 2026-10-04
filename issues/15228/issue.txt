@@ -1,0 +1,52 @@
+TITLE: BIM: column tool creates an object named "beam"
+STATE: open
+AUTHOR: kaiwas
+CREATED: 2024-07-06T10:40:56Z
+UPDATED: 2026-09-25T16:10:38Z
+ASSIGNEES: 
+LABELS: Type: Bug, Mod: BIM, Status: Confirmed, no-auto-close
+
+### Is there an existing issue for this?
+
+- [X] I have searched the existing issues
+
+### Problem description
+
+When a column is created, a "beam" object is created.
+I understand that the way beams and columns are constructed is very similar, but the name should probably be generated differently (as column rather than beam)
+
+Probably the IFC Type also need to be adjusted.
+
+
+https://github.com/FreeCAD/FreeCAD/assets/32273833/4bd2a182-1077-455e-b5c9-d99d46023b61
+
+
+
+### Full version info
+
+```shell
+OS: Manjaro Linux (KDE/plasma)
+Word size of FreeCAD: 64-bit
+Version: 0.22.0dev.38043 (Git) AppImage
+Build type: Release
+Branch: main
+Hash: 561e521817034ea7660de987d8ab7183ad583595
+Python 3.11.9, Qt 5.15.13, Coin 4.0.2, Vtk 9.2.6, OCC 7.7.2
+Locale: Russian/Russia (ru_RU)
+Installed mods: 
+  * OpenTheme 2024.7.3
+  * PitchedRoof
+```
+
+
+### Subproject(s) affected?
+
+BIM/Arch
+
+### Anything else?
+
+_No response_
+
+### Code of Conduct
+
+- [X] I agree to follow this project's Code of Conduct

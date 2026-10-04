@@ -1,0 +1,116 @@
+
+----- 2024-07-06 maxwxyz -----
+@yorikvanhavre is there a difference between the underlying object?
+
+----- 2024-07-06 kaiwas -----
+> is there a difference between the underlying object?
+
+in version 0.21 everything was correct.
+![2024-07-06 17_24_54](https://github.com/FreeCAD/FreeCAD/assets/32273833/fb8d0bce-ac89-4a7a-a444-162c07128e45)
+
+
+----- 2024-07-08 yorikvanhavre -----
+I cannot reproduce the problem, for me the created object has the correct Column IFC type...
+Can you look at what happens on the python console, and try pasting mine here, to see if the result is different?
+
+```python
+import Arch
+import WorkingPlane
+s = Arch.makeStructure(length=300.0,width=400.0,height=3000.0)
+s.Placement.Base = FreeCAD.Vector(-10.0, 20.0, 0.0)
+wp = WorkingPlane.get_working_plane()
+s.Placement.Rotation = s.Placement.Rotation.multiply(wp.get_placement().Rotation)
+```
+
+----- 2024-07-08 furgo16 -----
+I can't reproduce following the steps in the video either. It also creates the Column-named object and has the Column IFC type for me.
+
+```
+OS: Ubuntu Core 22 (ubuntu:GNOME/ubuntu)
+Word size of FreeCAD: 64-bit
+Version: 0.22.0dev.38051 (Git) Snap 1070
+Build type: Release
+Branch: main
+Hash: dfe0c5d4ee4841f11e62da1104e322e95834aba2
+Python 3.10.12, Qt 5.15.10, Coin 4.0.0, Vtk 7.1.1, OCC 7.7.1
+Installed mods: 
+  * OpenTheme 2024.7.3
+  * Curves 0.6.40
+  * ezydxf
+  * Ondsel-Lens 2024.7.5.02
+  * Assembly4 0.50.15
+```
+
+----- 2024-07-08 Roy-043 -----
+I can confirm this. If you pause the video at 0:04 you will notice the settings that cause the error.
+
+Steps:
+1. Start BIM_Beam.
+2. Specify Category "Precast concrete" and Preset "Beam"
+3. Create a beam by picking 2 points. Notice BTW that with these settings the given preview does not match the produced beam (but that is a different issue).
+4. Start BIM_Column.
+5. Pick a point for the column.
+6. Result: wrong object name.
+
+----- 2024-07-08 kaiwas -----
+I noticed this problem in version 0.22, but it seems to be reproducible in version 0.21.
+And it really comes down to the material chosen.
+If you use a metal profile, then everything is fine.
+But if you choose concrete, then something is not working correctly.
+There is no “column” preset for a concrete column. The problem is probably related to this.
+Demonstration video. (Thanks @Roy-043 )
+
+https://github.com/FreeCAD/FreeCAD/assets/32273833/7e41eeae-7c17-49b2-abf8-5b338b0879ad
+
+
+
+
+
+----- 2024-07-09 kaiwas -----
+@yorikvanhavre  I would also like to add that due to the fact that the beam/column tool is connected to each other, they sometimes work in an incomprehensible way. Topic for discussion on the forum.
+https://forum.freecad.org/viewtopic.php?t=88989
+
+It seems to me that we need to test the operation of these tools for different cases and several times in a row. Each next time may be different from the previous one.
+
+
+
+----- 2024-07-11 yorikvanhavre -----
+Normally both column and beam modes should save their own settings separately... There seems to be a problem there indeed, I'll have a better look
+
+*EDIT* Just checked, it doesn't. Saved preset settings are saved at the same place for both beams and columns. So this is something to be fixed, preset settings should be saved in two separate subsets, one for beams and one for columns. However, I'd rather do this after 1.0 to not introduce new last-minute bugs.
+
+Also, I think when starting the tool using the beam or column buttons, the beam/column mode is implicit, so the beam/column controls in the task panel should be hidden.
+
+----- 2025-10-02 github-actions[bot] -----
+Hi! This issue hasn’t seen activity in a while. We automatically check each issue after 190 days without activity to keep the backlog tidy.
+If it’s still relevant, please update to the latest FreeCAD weekly build [download here](https://github.com/FreeCAD/FreeCAD/releases/) to see if the issue is already resolved.
+
+If the issue is still relevant, let us know by adding a comment.
+Otherwise, we’ll close this issue automatically in 60 days.
+
+Feel free to comment anytime to keep it open. Closed issues can always be reopened.
+Thanks for helping improve FreeCAD!
+
+Access additional [FreeCAD](https://freecad.org) resources:
+  - **Forum**: https://forum.freecad.org
+  - **Blog**: https://blog.freecad.org
+  - **Wiki**: https://wiki.freecad.org
+
+----- 2025-10-02 FEA-eng -----
+Still relevant
+
+```
+OS: Windows 10 build 19045
+Architecture: x86_64
+Version: 1.1.0dev.14555 (Git shallow)
+Build date: 2025/09/30 23:55:55
+Build type: Release
+Branch: main
+Hash: b08a0f87d68dd38cfcf39046209a7075adf11576
+Python 3.11.13, Qt 6.8.3, Coin 4.0.3, Vtk 9.3.1, boost 1_86, Eigen3 3.4.0, PySide 6.8.3
+shiboken 6.8.3, xerces-c 3.3.0, IfcOpenShell 0.8.2, OCC 7.8.1
+Locale: Polish/Poland (pl_PL)
+Navigation Style/Orbit Style/Rotation Mode: CAD/Rounded Arcball/Window center
+Stylesheet/Theme/QtStyle: FreeCAD.qss/FreeCAD Light/
+Logical DPI/Physical DPI/Pixel Ratio: 96/90.0633/1
+```

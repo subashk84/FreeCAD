@@ -1,0 +1,70 @@
+
+----- 2025-05-13 yorikvanhavre -----
+I think we should stop "beautifying" things here (removing the Pset prefix and adding spaces). Pset names are indeed meant to be used as is, and it's important (and also more and more people are using custom psets without the Pset prefix).
+
+The main place where this happens is at https://github.com/FreeCAD/FreeCAD/blob/main/src/Mod/BIM/bimcommands/BimIfcProperties.py#L111
+
+Where that line should simply become:
+
+```python
+self.psetkeys = self.psetdefs.keys()
+```
+
+But then it should also be changed later, at https://github.com/FreeCAD/FreeCAD/blob/main/src/Mod/BIM/bimcommands/BimIfcProperties.py#L714
+
+```python
+psetdef = psetlabel.replace(" ", "")
+```
+
+Hopefuly that should be enough...
+
+Want to try? 😇 
+
+----- 2025-05-14 semhustej -----
+> I think we should stop "beautifying" things here (removing the Pset prefix and adding spaces). Pset names are indeed meant to be used as is, and it's important (and also more and more people are using custom psets without the Pset prefix).
+
+Yes I agree. Pset_ is actually integral part of the name so 'beautifying' is actually removing part of the meaning.
+
+I plan to learn building FreeCAD in the autumn, so I don't think it makes sense for me to try fixing the issue now, as I can not test the changes myself until they are in the weekly builds.
+
+----- 2025-05-15 yorikvanhavre -----
+No worries! I'll do it!
+
+----- 2025-05-15 semhustej -----
+> No worries! I'll do it!
+
+Thank you!
+
+----- 2025-11-23 github-actions[bot] -----
+Hi! This issue hasn’t seen activity in a while. We automatically check each issue after 190 days without activity to keep the backlog tidy.
+If it’s still relevant, please update to the latest FreeCAD weekly build [download here](https://github.com/FreeCAD/FreeCAD/releases/) to see if the issue is already resolved.
+
+If the issue is still relevant, let us know by adding a comment.
+Otherwise, we’ll close this issue automatically in 60 days.
+
+Feel free to comment anytime to keep it open. Closed issues can always be reopened.
+Thanks for helping improve FreeCAD!
+
+Access additional [FreeCAD](https://freecad.org) resources:
+  - **Forum**: https://forum.freecad.org
+  - **Blog**: https://blog.freecad.org
+  - **Wiki**: https://wiki.freecad.org
+
+----- 2026-05-07 Roy-043 -----
+Updating the mentioned file is indeed no problem. However, there are other files where similar code is used.
+
+EDIT:
+
+pset_definitions.csv is referenced in:
+
+- /BIM/ArchComponent.py
+- /BIM/bimcommands/BimPreflight.py
+- /BIM/bimcommands/BimIfcProperties.py
+- /BIM/nativeifc/ifc_status.py
+
+CustomPsets.csv is referenced in:
+
+- /BIM/bimcommands/BimIfcProperties.py
+- /BIM/nativeifc/ifc_status.py
+
+So it makes sense to look at other files as well.
